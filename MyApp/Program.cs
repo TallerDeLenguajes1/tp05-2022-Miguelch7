@@ -1,20 +1,23 @@
 ﻿// See https://aka.ms/new-console-template for more information
 Console.WriteLine("========== Calculadora V1 ==========");
 
-int ejecucion = 1, operacion, a, b, resultado = 0;
+int ejecucion = 1, operacion;
+double a, b = 0, c, d, resultado = 0;
 string nombreOperacion = "";
 
 do {
     do {
-        Console.WriteLine("Elija una operación a realizar: (1: Sumar | 2: Restar | 3: Multiplicación | 4: División)");
+        Console.WriteLine("Elija una operación a realizar: (1: Sumar | 2: Restar | 3: Multiplicación | 4: División | 5: Valor Absoluto | 6: Cuadrado | 7: Raiz cuadrada | 8: seno | 9: Coseno | 10: Parte entera de un decimal)");
         operacion = Convert.ToInt32(Console.ReadLine());
-    } while (operacion < 0 && operacion > 5);
+    } while (operacion < 0 || operacion > 10);
 
     Console.WriteLine("Ingrese un número");
-    a = Convert.ToInt32(Console.ReadLine());
+    a = Convert.ToDouble(Console.ReadLine());
 
-    Console.WriteLine("Ingrese otro número");
-    b = Convert.ToInt32(Console.ReadLine());
+    if (operacion < 5) {
+        Console.WriteLine("Ingrese otro número");
+        b = Convert.ToDouble(Console.ReadLine());
+    };
 
     switch (operacion)
     {
@@ -34,31 +37,68 @@ do {
             resultado = Dividir(a, b);
             nombreOperacion = "División";
             break;
+        case 5:
+            resultado = Math.Abs(a);
+            nombreOperacion = "Valor Absoluto";
+            break;
+        case 6:
+            resultado = Math.Pow(a, 2);
+            nombreOperacion = "Cuadrado";
+            break;
+        case 7:
+            resultado = Math.Sqrt(a);
+            nombreOperacion = "Raíz cuadrada";
+            break;
+        case 8:
+            resultado = Math.Sin(a);
+            nombreOperacion = "Seno";
+            break;
+        case 9:
+            resultado = Math.Cos(a);
+            nombreOperacion = "Coseno";
+            break;
+        case 10:
+            resultado = Convert.ToInt32(a);
+            nombreOperacion = "Parte entera";
+            break;
         default:
             break;
     };
 
-    Console.WriteLine($"El resultado de la { nombreOperacion } entre { a } y { b } es: { resultado }");
+    if (operacion < 5) {
+        Console.WriteLine($"El resultado de la { nombreOperacion } entre { a } y { b } es: { resultado }");
+    } else {
+        Console.WriteLine($"El resultado de el/la { nombreOperacion } de { a } es: { resultado }");
+    };
 
     Console.WriteLine("Quiere seguir operando? (1: Si | 0: No)");
     ejecucion = Convert.ToInt32(Console.ReadLine());
 
 } while (ejecucion == 1);
 
+Console.WriteLine("Ingrese otro número");
+c = Convert.ToDouble(Console.ReadLine());
+
+Console.WriteLine("Ingrese otro número");
+d = Convert.ToDouble(Console.ReadLine());
+
+Console.WriteLine($"El máximo entre { c } y { d } es: { Math.Max(c, d) } ");
+Console.WriteLine($"El mínimo entre { c } y { d } es: { Math.Min(c, d) } ");
+
 // Funciones
-int Sumar(int a, int b) {
+double Sumar(double a, double b) {
     return a + b;
 };
 
-int Restar(int a, int b) {
+double Restar(double a, double b) {
     return a - b;
 };
 
-int Multiplicar(int a, int b) {
+double Multiplicar(double a, double b) {
     return a * b;
 };
 
-int Dividir(int a, int b) {
+double Dividir(double a, double b) {
 
     if (b == 0) {
         Console.WriteLine("No se puede dividir por 0");
